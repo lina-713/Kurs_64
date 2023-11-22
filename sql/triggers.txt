@@ -1,0 +1,17 @@
+CREATE OR REPLACE TRIGGER trig_log_history
+AFTER DELETE OR INSERT OR UPDATE ON orders
+FOR EACH ROW
+EXECUTE PROCEDURE func_log_history();
+CREATE OR REPLACE FUNCTION func_log_history()
+RETURNS TRIGGER AS $$
+BEGIN
+IF TG_OP = 'INSERT' THEN
+INSERT INTO log_history(log_ord_id, log_ord_number, log_date, log_value)VALUES(NEW.order_id, NEW.ord_number, CURRENT_DATE, 'I');
+ELSEIF TG_op = 'UPDATE' THEN
+INSERT INTO log_history(log_ord_id, log_ord_number, log_date, log_value)VALUES(NEW.order_id, NEW.ord_number, CURRENT_DATE, 'U');
+ELSEIF TG_op = 'DELETE' THEN
+INSERT INTO log_history(log_ord_id, log_ord_number, log_date, log_value)VALUES(OLD.order_id, OLD.ord_number, CURRENT_DATE, 'D');
+END IF;
+RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;

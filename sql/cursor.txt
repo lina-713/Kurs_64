@@ -1,0 +1,25 @@
+CREATE OR REPLACE FUNCTION public.density_order(
+	)
+    RETURNS void
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+total_density NUMERIC(5, 2);
+cur_order CURSOR FOR
+SELECT ord_weight, ord_volume
+FROM orders;
+order_weight NUMERIC(5, 1);
+order_volume NUMERIC(5, 2);
+BEGIN
+OPEN cur_order;
+LOOP
+FETCH cur_order INTO order_weight, order_volume;
+EXIT WHEN NOT FOUND;
+total_density = order_weight / order_volume;
+END LOOP;
+CLOSE cur_order;
+RAISE NOTICE 'The total density of the order is %', total_density;
+END;
+$BODY$;

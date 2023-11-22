@@ -1,0 +1,13 @@
+CREATE VIEW view_orders AS
+SELECT
+o.order_id,
+ca.car_brand,
+ca.car_model,
+ca.car_number,
+o.ord_weight,
+o.ord_volume,
+o.ord_description,
+o.ord_number
+FROM orders o
+JOIN cars ca ON ca.car_id = o.ord_car_id
+

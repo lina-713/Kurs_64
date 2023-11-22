@@ -1,0 +1,20 @@
+CREATE OR REPLACE PROCEDURE public.update_car_vin(
+	IN vin character,
+	IN new_vin character)
+LANGUAGE 'plpgsql'
+AS $BODY$
+DECLARE p_value VARCHAR(3);
+BEGIN
+IF (EXISTS(SELECT car_vin FROM cars where car_vin = vin))
+THEN p_value := 'YES';
+ELSE p_value := 'NO';
+END IF;
+IF (p_value = 'YES') THEN
+UPDATE cars SET car_vin = new_vin
+WHERE car_vin = vin;
+COMMIT;
+ELSEIF (p_value = 'NO')
+THEN ROLLBACK;
+END IF;
+END;
+$BODY$;

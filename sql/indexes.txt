@@ -1,0 +1,4 @@
+CREATE INDEX ord_desc_index ON orders USING HASH (ord_description)
+CREATE INDEX route_start_index ON routes USING BRIN (start_location)
+CREATE INDEX car_brand_index ON cars USING BTREE (car_brand)
+CLUSTER cars USING car_brand_index

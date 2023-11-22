@@ -1,0 +1,29 @@
+CREATE OR REPLACE FUNCTION public.get_orders_by_weight_range(
+	numeric,
+	numeric)
+    RETURNS SETOF orders 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+BEGIN
+RETURN QUERY SELECT *
+FROM orders
+WHERE ord_weight BETWEEN $1 AND $2;
+END;
+$BODY$;
+
+CREATE OR REPLACE FUNCTION public.count_cars_by_fuel(
+	fuel_type character varying)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+BEGIN
+RETURN (SELECT COUNT(*) FROM cars WHERE car_fuel = fuel_type);
+END;
+$BODY$;
+

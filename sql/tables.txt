@@ -1,0 +1,52 @@
+CREATE TABLE cars (
+car_id INT NOT NULL PRIMARY KEY,
+car_brand VARCHAR(50),
+car_model VARCHAR(50),
+car_number VARCHAR(9),
+car_fuel VARCHAR(10),
+car_vin CHAR(17) UNIQUE
+);
+
+CREATE TABLE drivers (
+driver_id INT PRIMARY KEY,
+driver_name VARCHAR(50),
+driver_phone VARCHAR(20),
+driver_license_id INT UNIQUE,
+driver_license CHAR(10),
+FOREIGN KEY (driver_license_id) REFERENCES drivers(driver_id)
+);
+
+CREATE TABLE IF NOT EXISTS public.orders
+(
+    order_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    ord_car_id integer,
+    ord_weight numeric(5,1),
+    ord_volume numeric(5,2),
+    ord_description character varying(100) COLLATE pg_catalog."default",
+    ord_number character(10) COLLATE pg_catalog."default",
+    CONSTRAINT orders_pkey PRIMARY KEY (order_id),
+    CONSTRAINT car_id_fkey FOREIGN KEY (ord_car_id)
+        REFERENCES public.cars (car_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+);
+
+CREATE TABLE routes (
+route_id INT NOT NULL PRIMARY KEY,
+start_location VARCHAR(50),
+end_location VARCHAR(50),
+start_date DATE,
+end_date DATE,
+route_driver_id INT,
+route_order_id INT,
+CONSTRAINT driver_id_fkey FOREIGN KEY (route_driver_id) REFERENCESdrivers(driver_id) ON DELETE CASCADE,
+CONSTRAINT order_id_fkey FOREIGN KEY (route_order_id) REFERENCESorders(order_id) ON DELETE CASCADE
+);
+
+CREATE TABLE changes_history (
+ch_id INT,
+ch_history CHAR(1),
+ch_ord_id INT,
+FOREIGN KEY (ch_ord_id) REFERENCES orders(order_id)
+);
+

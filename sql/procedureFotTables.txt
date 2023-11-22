@@ -1,0 +1,146 @@
+CREATE OR REPLACE PROCEDURE public.delete_cars(
+	IN id integer)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+delete from cars where car_id = id;
+END;
+$BODY$;
+
+CREATE OR REPLACE PROCEDURE public.delete_drivers(
+	IN id integer)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+DELETE FROM drivers WHERE driver_id = id;
+END;
+$BODY$;
+
+CREATE OR REPLACE PROCEDURE public.delete_orders(
+	IN id integer)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+delete from orders where order_id = id;
+END;
+$BODY$;
+
+CREATE OR REPLACE PROCEDURE public.delete_routes(
+	IN id integer)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+delete from routes where route_id = id;
+END;
+$BODY$;
+
+CREATE OR REPLACE PROCEDURE public.insert_cars(
+	IN brand character varying,
+	IN model character varying,
+	IN number character varying,
+	IN fuel character varying,
+	IN vin character)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+insert into cars( car_brand, car_model, car_number, car_fuel, car_vin)VALUES (brand, model, number, fuel, vin);
+END;
+$BODY$;
+
+CREATE OR REPLACE PROCEDURE public.insert_drivers(
+	IN name character varying,
+	IN phone character varying,
+	IN license character)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+INSERT INTO drivers(driver_name, driver_phone,driver_license)
+VALUES (name, phone, license);
+END;
+$BODY$;
+
+CREATE OR REPLACE PROCEDURE public.insert_orders(
+	IN car_id integer,
+	IN weight numeric,
+	IN volume numeric,
+	IN description character varying,
+	IN number character)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+insert into orders(ord_car_id, ord_weight, ord_volume, ord_description,ord_number)
+VALUES (car_id, weight, volume, description, number);
+END;
+$BODY$;
+
+CREATE OR REPLACE PROCEDURE public.insert_routes(
+	IN s_loc character varying,
+	IN e_loc character varying,
+	IN s_date date,
+	IN e_date date,
+	IN driver_id integer,
+	IN order_id integer)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+insert into routes(start_location, end_location, start_date, end_date, route_driver_id, route_order_id)
+VALUES (s_loc, e_loc, s_date, e_date, driver_id, order_id);
+END;
+$BODY$;
+
+CREATE OR REPLACE PROCEDURE public.update_cars(
+	IN id integer,
+	IN brand character varying,
+	IN model character varying,
+	IN number character varying,
+	IN fuel character varying,
+	IN vin character)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+UPDATE cars SET car_brand = brand, car_model = model, car_number = number,car_fuel= fuel, car_vin = vin WHERE car_id = id;
+END;
+$BODY$;
+
+CREATE OR REPLACE PROCEDURE public.update_drivers(
+	IN id integer,
+	IN name character varying,
+	IN phone character varying,
+	IN license character)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+UPDATE drivers SET driver_name = name, driver_phone = phone, driver_license=license WHERE driver_id = id;
+END;
+$BODY$;
+
+CREATE OR REPLACE PROCEDURE public.update_orders(
+	IN id integer,
+	IN car_id integer,
+	IN weight numeric,
+	IN volume numeric,
+	IN description character varying,
+	IN number character)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+UPDATE orders SET ord_car_id = car_id, ord_weight = weight, ord_volume=volume,ord_description = description, ord_number = number
+WHERE order_id = id;
+END;
+$BODY$;
+
+CREATE OR REPLACE PROCEDURE public.update_routes(
+	IN id integer,
+	IN s_loc character varying,
+	IN e_loc character varying,
+	IN s_date date,
+	IN e_date date,
+	IN driver_id integer,
+	IN order_id integer)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+UPDATE routes SET start_location = s_loc, end_location = e_loc, start_date=s_date, end_date = e_date, route_driver_id = driver_id,
+route_order_id = order_id WHERE route_id = id;
+END;
+$BODY$;

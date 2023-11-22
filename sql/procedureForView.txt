@@ -1,0 +1,44 @@
+CREATE OR REPLACE PROCEDURE public.update_view_orders(
+	IN id integer,
+	IN brand character varying,
+	IN model character varying,
+	IN number character varying,
+	IN weight numeric,
+	IN volume numeric,
+	IN description character varying,
+	IN o_number character)
+LANGUAGE 'plpgsql'
+AS $BODY$
+	BEGIN
+	UPDATE view_orders SET car_brand = brand, car_model = model, car_number=number,ord_weight = weight, ord_volume = volume, ord_description = description, ord_number=o_number
+	WHERE order_id = id;
+	END;
+	
+$BODY$;
+
+CREATE OR REPLACE PROCEDURE public.del_view_orders(
+	IN id integer)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+DELETE FROM view_orders WHERE order_id = id;
+END;
+$BODY$;
+
+CREATE OR REPLACE PROCEDURE public.ins_view_orders(
+	IN id integer,
+	IN brand character varying,
+	IN model character varying,
+	IN number character varying,
+	IN weight numeric,
+	IN volume numeric,
+	IN description character varying,
+	IN o_number character)
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+INSERT INTO view_orders(order_id, car_brand, car_model, car_number, ord_weight,ord_volume, ord_description, ord_number)
+VALUES(id, brand, model, number, weight, volume, description, o_number);
+END;
+$BODY$;
+
