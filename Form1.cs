@@ -25,12 +25,12 @@ namespace Kurs_64
             string str;
             switch(textBox1.Text + textBox2.Text)
             {
-                case ("guest" + "guest"):
-                    str = "Host=localhost;Port=5432;Database=MotorPool;Username=guest;Password=guest";
+                case ("user1" + "87654321"):
+                    str = "Host=localhost;Port=5432;Database=MotorPool;Username=user1;Password=87654321";
                     break;
 
-                case ("admin" + "admin"):
-                    str = "Host=localhost;Port=5432;Database=MotorPool;Username=admin;Password=admin";
+                case ("admin1" + "12345678"):
+                    str = "Host=localhost;Port=5432;Database=MotorPool;Username=admin1;Password=12345678";
                     break;
                 default:
                     MessageBox.Show("Неправильный логин или пароль!");
@@ -40,6 +40,7 @@ namespace Kurs_64
             connection = conn;
             var homepage = new Homepage(connection);
             homepage.Show();
+            this.Dispose();
         }
     }
 }

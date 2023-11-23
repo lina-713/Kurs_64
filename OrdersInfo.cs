@@ -18,6 +18,12 @@ namespace Kurs_64
         {
             InitializeComponent();
             this.connection = connection;
+            FillGrid(); if (connection.UserName != "admin1")
+            {
+                button1.Visible = false;
+                button2.Visible = false;
+                button3.Visible = false;
+            }
             FillGrid();
         }
 
@@ -68,7 +74,7 @@ namespace Kurs_64
         private void button2_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
-            var result = MessageBox.Show("Вы действительно хотите удалить данного спортсмена?", "Удаление", MessageBoxButtons.YesNo);
+            var result = MessageBox.Show("Удалить данный заказ?", "Удаление", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
                 connection.Open();

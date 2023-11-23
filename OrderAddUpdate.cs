@@ -105,7 +105,7 @@ namespace Kurs_64
         private void OrderUpdate(int id)
         {
             connection.Open();
-            var command = new NpgsqlCommand("update_drivers", connection);
+            var command = new NpgsqlCommand("update_orders", connection);
             try
             {
                 command.CommandType = CommandType.StoredProcedure;

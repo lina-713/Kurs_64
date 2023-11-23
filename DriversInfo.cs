@@ -19,6 +19,13 @@ namespace Kurs_64
             InitializeComponent();
             this.connection = connection;
             FillGrid();
+            if (connection.UserName != "admin1")
+            {
+                button1.Visible = false;
+                button2.Visible = false;
+                button3.Visible = false;
+            }
+            FillGrid();
         }
 
         public void FillGrid()

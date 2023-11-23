@@ -47,9 +47,9 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.Location = new System.Drawing.Point(28, 194);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 16);
+            this.label5.Size = new System.Drawing.Size(73, 16);
             this.label5.TabIndex = 21;
-            this.label5.Text = "Объем";
+            this.label5.Text = "VIN номер";
             // 
             // label4
             // 

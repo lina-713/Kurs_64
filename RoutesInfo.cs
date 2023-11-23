@@ -18,7 +18,7 @@ namespace Kurs_64
         {
             InitializeComponent();
             this.connection = connection;
-            if (connection.UserName != "admin")
+            if (connection.UserName != "admin1")
             {
                 button1.Visible = false;
                 button2.Visible = false;
@@ -50,7 +50,8 @@ namespace Kurs_64
                     endDate = Convert.ToDateTime(reader["end_date"]),
                     driverName = Convert.ToString(reader["driver_name"]),
                     driverPhone = Convert.ToString(reader["driver_phone"]),
-                    status = Convert.ToString(reader["status"])
+                    status = Convert.ToString(reader["status"]),
+                    number = Convert.ToInt32(reader["order_id"])
                 };
                 listRoute.Add(view_routes);
             }
@@ -67,7 +68,19 @@ namespace Kurs_64
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
+            var result = MessageBox.Show("Удалить этот маршрут?", "Удаление", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                connection.Open();
+                NpgsqlCommand command = new NpgsqlCommand("delete_routes", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+                connection.Close();
+                MessageBox.Show("Маршрут удален!");
+                FillGrid();
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)

@@ -25,6 +25,41 @@ namespace Kurs_64
             this.Id = Id;
             DriverDictionary();
             OrderDictionary();
+            if (Id != 0)
+            {
+                EnterInfo(Id);
+                button1.Text = "Обновить";
+            }
+            else
+                button1.Text = "Добавить";
+
+        }
+        private void EnterInfo(int Id)
+        {
+            var str = $"Select start_location, end_location, start_date, end_date, route_driver_id, route_order_id from routes where route_id = {Id}";
+            var command = new NpgsqlCommand(str, connection);
+            try
+            {
+                connection.Open();
+                NpgsqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                textBox1.Text = reader.GetString(0);
+                textBox2.Text = reader.GetString(1);
+                dateTimePicker1.Value = reader.GetDateTime(2).Date;
+                dateTimePicker2.Value = reader.GetDateTime(3).Date;
+                comboBox1.SelectedIndex = reader.GetInt32(4) - 1;
+                comboBox2.Text = reader.GetInt32(5).ToString();
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
